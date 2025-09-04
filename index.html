@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADI_LIVE - Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="0902.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    <nav class="animate-slide-down">
+        <div class="nav-container">
+            <h2 class="animate-pulse">ADI_LIVE</h2>
+            <ul>
+                <li><a href="index.html" class="animate-fade-in">Home</a></li>
+                <li><a href="about.html" class="animate-fade-in">About</a></li>
+                <li><a href="resources.html" class="animate-fade-in">Resources</a></li>
+                <li><a href="login.html" class="animate-fade-in">Login</a></li>
+                <li><a href="admin.html" class="animate-fade-in">Admin</a></li>
+                <li><a href="user-guide.html" class="animate-fade-in">Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header class="animate-slide-up">
+        <h1 data-text="Welcome to ADI_LIVE" class="animate-glow">Welcome to ADI_LIVE</h1>
+    </header>
+    <main>
+        <div class="card animate-slide-up">
+            <h3 data-text="Navigate the Gaming Universe">Navigate the Gaming Universe</h3>
+            <p>Navigate through the pages using the menu above.</p>
+        </div>
+
+        <!-- YouTube Video Previewer Section -->
+        <div class="video-previewer-section animate-slide-up">
+            <div class="card">
+                <h3 data-text="Gaming Content Hub">Gaming Content Hub</h3>
+                <p>Check out my latest gaming videos and tutorials</p>
+                <div class="video-grid" id="video-grid">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Modal -->
+        <div id="video-modal" class="video-modal">
+            <div class="video-modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="video-player-container">
+                    <iframe id="video-player" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="keyauth-config.js"></script>
+    <script src="keyauth-user.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

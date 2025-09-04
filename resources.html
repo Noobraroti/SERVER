@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resources - ADI_LIVE</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="0902.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    <script>
+        // Redirect to login if not logged in
+        if (!localStorage.getItem('loggedInUser')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <nav>
+        <div class="nav-container">
+            <h2>ADI_LIVE</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <h1 data-text="Resources">Resources</h1>
+    </header>
+    <main class="resources-section">
+        <div class="card">
+            <h3>Gaming Tutorials</h3>
+            <p>Explore a wide range of tutorials covering popular games, strategies, and tips to improve your gameplay.</p>
+            <a href="https://www.youtube.com/playlist?list=PLgaming" class="btn" target="_blank" rel="noopener">Watch Tutorials</a>
+        </div>
+        <div class="card">
+            <h3>Game Mods & Add-ons</h3>
+            <p>Download the latest mods and add-ons to customize your gaming experience.</p>
+            <a href="https://mods.neongaminghub.com" class="btn" target="_blank" rel="noopener">Download Mods</a>
+        </div>
+        <div class="card">
+            <h3>Community Forums</h3>
+            <p>Join discussions with fellow gamers, share your experiences, and get help from the community.</p>
+            <a href="https://forums.neongaminghub.com" class="btn" target="_blank" rel="noopener">Visit Forums</a>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

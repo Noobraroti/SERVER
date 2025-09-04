@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - User Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .admin-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 5px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .method-tabs {
+            display: flex;
+            margin: 1rem 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .method-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .method-tab.active {
+            border-bottom-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .method-content {
+            display: none;
+        }
+
+        .method-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="0902.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <nav>
+        <div class="nav-container">
+            <h2>🔐 Admin Panel</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-text="User Management System">User Management System</h1>
+        <p>Admin interface for managing website users</p>
+    </header>
+
+    <main class="admin-container">
+        <!-- Statistics -->
+        <div class="admin-card">
+            <h2>📊 System Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-users">0</div>
+                    <div>Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="active-users">0</div>
+                    <div>Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="storage-size">0 KB</div>
+                    <div>Storage Used</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Method Tabs -->
+        <div class="admin-card">
+            <h2>🛠️ User Addition Methods</h2>
+            <div class="method-tabs">
+                <div class="method-tab active" onclick="showMethod('manual')">Manual Entry</div>
+                <div class="method-tab" onclick="showMethod('bulk')">Bulk Import</div>
+                <div class="method-tab" onclick="showMethod('console')">Console Commands</div>
+                <div class="method-tab" onclick="showMethod('export')">Export/Import</div>
+            </div>
+
+            <!-- Manual Entry -->
+            <div id="manual" class="method-content active">
+                <h3>Add Single User</h3>
+                <form id="add-user-form" class="form">
+                    <div class="form-grid">
+                        <input type="email" id="user-email" placeholder="Email Address" required>
+                        <input type="password" id="user-password" placeholder="Password" required>
+                    </div>
+                    <input type="text" id="user-name" placeholder="Full Name (Optional)">
+                    <button type="submit" class="btn">Add User</button>
+                    <p id="add-user-message"></p>
+                </form>
+            </div>
+
+            <!-- Bulk Import -->
+            <div id="bulk" class="method-content">
+                <h3>Bulk User Import</h3>
+                <p>Paste user data in JSON format:</p>
+                <textarea id="bulk-users" rows="10" placeholder='[
+  {"email": "user1@example.com", "password": "password123", "name": "User One"},
+  {"email": "user2@example.com", "password": "password456", "name": "User Two"}
+]' class="form"></textarea>
+                <button onclick="importBulkUsers()" class="btn">Import Users</button>
+                <p id="bulk-import-message"></p>
+            </div>
+
+            <!-- Console Commands -->
+            <div id="console" class="method-content">
+                <h3>Browser Console Commands</h3>
+                <p>Open browser console (F12) and run these commands:</p>
+
+                <h4>Add Single User:</h4>
+                <div class="code-snippet">
+// Add a single user
+const users = JSON.parse(localStorage.getItem('users')) || [];
+users.push({
+  email: 'newuser@example.com',
+  password: 'securepassword123',
+  name: 'New User',
+  created: new Date().toISOString()
+});
+localStorage.setItem('users', JSON.stringify(users));
+console.log('User added successfully!');
+                </div>
+
+                <h4>Add Multiple Users:</h4>
+                <div class="code-snippet">
+// Add multiple users at once
+const newUsers = [
+  {email: 'user1@example.com', password: 'pass1', name: 'User 1'},
+  {email: 'user2@example.com', password: 'pass2', name: 'User 2'},
+  {email: 'user3@example.com', password: 'pass3', name: 'User 3'}
+];
+const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+const updatedUsers = [...existingUsers, ...newUsers];
+localStorage.setItem('users', JSON.stringify(updatedUsers));
+console.log(`${newUsers.length} users added successfully!`);
+                </div>
+
+                <h4>View All Users:</h4>
+                <div class="code-snippet">
+// View all stored users
+const users = JSON.parse(localStorage.getItem('users')) || [];
+console.table(users);
+                </div>
+            </div>
+
+            <!-- Export/Import -->
+            <div id="export" class="method-content">
+                <h3>Data Management</h3>
+                <button onclick="exportUsers()" class="btn">Export Users to JSON</button>
+                <button onclick="clearAllUsers()" class="btn btn-danger">Clear All Users</button>
+                <div id="export-data" style="margin-top: 1rem;"></div>
+            </div>
+        </div>
+
+        <!-- Current Users List -->
+        <div class="admin-card">
+            <h2>👥 Current Users</h2>
+            <div class="user-list" id="user-list">
+                <p>Loading users...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="keyauth-config.js"></script>
+    <script src="keyauth-user.js"></script>
+    <script src="keyauth-admin.js"></script>
+    <script>
+        // Admin Panel JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check admin authentication first
+            if (!keyAuthAdmin.isAuthenticated) {
+                return; // KeyAuth admin will handle authentication modal
+            }
+
+            loadUsers();
+            updateStats();
+
+            // Add user form submission
+            const addUserForm = document.getElementById('add-user-form');
+            if (addUserForm) {
+                addUserForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    addUser();
+                });
+            }
+        });
+
+        function showMethod(methodId) {
+            // Hide all method contents
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected method
+            document.getElementById(methodId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function addUser() {
+            const email = document.getElementById('user-email').value;
+            const password = document.getElementById('user-password').value;
+            const name = document.getElementById('user-name').value;
+            const messageEl = document.getElementById('add-user-message');
+
+            if (!email || !password) {
+                messageEl.textContent = 'Email and password are required!';
+                messageEl.style.color = 'red';
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Check if user already exists
+            if (users.find(user => user.email === email)) {
+                messageEl.textContent = 'User with this email already exists!';
+                messageEl.style.color = 'red';
+                return;
+            }
+
+            // Add new user
+            const newUser = {
+                email: email,
+                password: password,
+                name: name || email.split('@')[0],
+                created: new Date().toISOString(),
+                role: 'user'
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            messageEl.textContent = 'User added successfully!';
+            messageEl.style.color = 'green';
+
+            // Reset form
+            document.getElementById('add-user-form').reset();
+
+            // Refresh user list
+            loadUsers();
+            updateStats();
+        }
+
+        function importBulkUsers() {
+            const bulkData = document.getElementById('bulk-users').value;
+            const messageEl = document.getElementById('bulk-import-message');
+
+            try {
+                const newUsers = JSON.parse(bulkData);
+                const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+                // Validate data structure
+                if (!Array.isArray(newUsers)) {
+                    throw new Error('Data must be an array of users');
+                }
+
+                // Add creation timestamps if missing
+                newUsers.forEach(user => {
+                    if (!user.created) {
+                        user.created = new Date().toISOString();
+                    }
+                    if (!user.name) {
+                        user.name = user.email.split('@')[0];
+                    }
+                });
+
+                const updatedUsers = [...existingUsers, ...newUsers];
+                localStorage.setItem('users', JSON.stringify(updatedUsers));
+
+                messageEl.textContent = `${newUsers.length} users imported successfully!`;
+                messageEl.style.color = 'green';
+
+                loadUsers();
+                updateStats();
+            } catch (error) {
+                messageEl.textContent = `Import failed: ${error.message}`;
+                messageEl.style.color = 'red';
+            }
+        }
+
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userList = document.getElementById('user-list');
+
+            if (users.length === 0) {
+                userList.innerHTML = '<p>No users found. Add some users to get started!</p>';
+                return;
+            }
+
+            userList.innerHTML = users.map((user, index) => `
+                <div class="user-item">
+                    <div class="user-info">
+                        <strong>${user.name || 'Unnamed'}</strong><br>
+                        <small>${user.email}</small><br>
+                        <small>Created: ${new Date(user.created || Date.now()).toLocaleDateString()}</small>
+                    </div>
+                    <div class="user-actions">
+                        <button onclick="deleteUser(${index})" class="btn btn-danger btn-small">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteUser(index) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                users.splice(index, 1);
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUsers();
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const loggedInUser = localStorage.getItem('loggedInUser');
+
+            document.getElementById('total-users').textContent = users.length;
+            document.getElementById('active-users').textContent = loggedInUser ? 1 : 0;
+
+            // Calculate storage size
+            const storageSize = JSON.stringify(users).length;
+            document.getElementById('storage-size').textContent = (storageSize / 1024).toFixed(2) + ' KB';
+        }
+
+        function exportUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const exportData = document.getElementById('export-data');
+
+            const jsonData = JSON.stringify(users, null, 2);
+            exportData.innerHTML = `
+                <h4>Exported User Data:</h4>
+                <pre class="code-snippet">${jsonData}</pre>
+                <button onclick="copyToClipboard('${jsonData.replace(/'/g, "\\'")}')" class="btn">Copy to Clipboard</button>
+            `;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Data copied to clipboard!');
+            });
+        }
+
+        function clearAllUsers() {
+            if (confirm('Are you sure you want to delete ALL users? This action cannot be undone!')) {
+                localStorage.removeItem('users');
+                localStorage.removeItem('loggedInUser');
+                loadUsers();
+                updateStats();
+                alert('All users cleared!');
+            }
+        }
+    </script>
+</body>
+</html>

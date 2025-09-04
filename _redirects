@@ -1,0 +1,6 @@
+# Redirects for Netlify
+# Handle API calls to external KeyAuth service
+/api/*  https://keyauth.win/api/1.2/:splat  200
+
+# Optional: Redirect old URLs if needed
+# /old-page  /new-page  301

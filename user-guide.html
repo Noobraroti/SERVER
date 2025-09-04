@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .guide-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .guide-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .method-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            margin: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #00ff00;
+            color: #000;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .warning-box {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .quick-link {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #00ff00;
+            transition: all 0.3s;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="0902.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <nav>
+        <div class="nav-container">
+            <h2>📚 User Guide</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-text="How to Add Users">How to Add Users</h1>
+        <p>Complete guide for managing users on your website</p>
+    </header>
+
+    <main class="guide-container">
+        <!-- Quick Links -->
+        <div class="guide-section">
+            <h2>🚀 Quick Start</h2>
+            <div class="quick-links">
+                <a href="#admin-panel" class="quick-link">
+                    <div>🔧 Admin Panel</div>
+                    <small>Easy web interface</small>
+                </a>
+                <a href="#console" class="quick-link">
+                    <div>💻 Console Commands</div>
+                    <small>Developer method</small>
+                </a>
+                <a href="#bulk-import" class="quick-link">
+                    <div>📊 Bulk Import</div>
+                    <small>Add multiple users</small>
+                </a>
+                <a href="#manual" class="quick-link">
+                    <div>✏️ Manual Entry</div>
+                    <small>Step-by-step guide</small>
+                </a>
+            </div>
+        </div>
+
+        <!-- Method 1: Admin Panel -->
+        <div class="guide-section" id="admin-panel">
+            <div class="method-header">
+                <span class="method-icon">🔧</span>
+                <h2>Method 1: Admin Panel (Recommended)</h2>
+            </div>
+
+            <div class="success-box">
+                <strong>Best for:</strong> Beginners, quick user management, bulk operations
+            </div>
+
+            <div class="step-list">
+                <div class="step-item">
+                    <strong>Open the Admin Panel:</strong> Navigate to <code>admin.html</code> in your browser
+                </div>
+                <div class="step-item">
+                    <strong>Add Single User:</strong> Fill in the email, password, and optional name fields
+                </div>
+                <div class="step-item">
+                    <strong>Bulk Import:</strong> Use the JSON format to add multiple users at once
+                </div>
+                <div class="step-item">
+                    <strong>View Users:</strong> See all current users in the user list below
+                </div>
+                <div class="step-item">
+                    <strong>Delete Users:</strong> Click the delete button next to any user
+                </div>
+            </div>
+
+            <h3>Example JSON for Bulk Import:</h3>
+            <div class="code-block">
+[
+  {
+    "email": "john@example.com",
+    "password": "securePass123",
+    "name": "John Doe"
+  },
+  {
+    "email": "jane@example.com",
+    "password": "myPassword456",
+    "name": "Jane Smith"
+  }
+]
+            </div>
+        </div>
+
+        <!-- Method 2: Browser Console -->
+        <div class="guide-section" id="console">
+            <div class="method-header">
+                <span class="method-icon">💻</span>
+                <h2>Method 2: Browser Console Commands</h2>
+            </div>
+
+            <div class="success-box">
+                <strong>Best for:</strong> Developers, quick testing, programmatic access
+            </div>
+
+            <div class="step-list">
+                <div class="step-item">
+                    <strong>Open Console:</strong> Press F12 or right-click → Inspect → Console tab
+                </div>
+                <div class="step-item">
+                    <strong>Copy the code below and paste it into the console</strong>
+                </div>
+                <div class="step-item">
+                    <strong>Press Enter to execute</strong>
+                </div>
+            </div>
+
+            <h3>Add Single User:</h3>
+            <div class="code-block">
+// Add a single user
+const users = JSON.parse(localStorage.getItem('users')) || [];
+users.push({
+  email: 'newuser@example.com',
+  password: 'securepassword123',
+  name: 'New User',
+  created: new Date().toISOString()
+});
+localStorage.setItem('users', JSON.stringify(users));
+console.log('User added successfully!');
+            </div>
+
+            <h3>Add Multiple Users:</h3>
+            <div class="code-block">
+// Add multiple users at once
+const newUsers = [
+  {email: 'user1@example.com', password: 'pass1', name: 'User 1'},
+  {email: 'user2@example.com', password: 'pass2', name: 'User 2'},
+  {email: 'user3@example.com', password: 'pass3', name: 'User 3'}
+];
+const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+const updatedUsers = [...existingUsers, ...newUsers];
+localStorage.setItem('users', JSON.stringify(updatedUsers));
+console.log(`${newUsers.length} users added successfully!`);
+            </div>
+
+            <h3>View All Users:</h3>
+            <div class="code-block">
+// View all stored users
+const users = JSON.parse(localStorage.getItem('users')) || [];
+console.table(users);
+            </div>
+        </div>
+
+        <!-- Method 3: Manual localStorage -->
+        <div class="guide-section" id="manual">
+            <div class="method-header">
+                <span class="method-icon">✏️</span>
+                <h2>Method 3: Manual localStorage Editing</h2>
+            </div>
+
+            <div class="warning-box">
+                <strong>Advanced Method:</strong> Requires basic JavaScript knowledge
+            </div>
+
+            <div class="step-list">
+                <div class="step-item">
+                    <strong>Open Browser DevTools:</strong> Press F12 or right-click → Inspect
+                </div>
+                <div class="step-item">
+                    <strong>Go to Application/Storage tab:</strong> Find localStorage section
+                </div>
+                <div class="step-item">
+                    <strong>Locate 'users' key:</strong> Click on it to edit the value
+                </div>
+                <div class="step-item">
+                    <strong>Edit the JSON array:</strong> Add your user objects
+                </div>
+                <div class="step-item">
+                    <strong>Save changes:</strong> The changes are applied immediately
+                </div>
+            </div>
+
+            <h3>Example localStorage Format:</h3>
+            <div class="code-block">
+[
+  {
+    "email": "existing@example.com",
+    "password": "oldpass",
+    "name": "Existing User",
+    "created": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "email": "newuser@example.com",
+    "password": "newpass123",
+    "name": "New User",
+    "created": "2024-01-15T10:30:00.000Z"
+  }
+]
+            </div>
+        </div>
+
+        <!-- Method 4: Bulk Import -->
+        <div class="guide-section" id="bulk-import">
+            <div class="method-header">
+                <span class="method-icon">📊</span>
+                <h2>Method 4: Bulk Import from File</h2>
+            </div>
+
+            <div class="success-box">
+                <strong>Best for:</strong> Large user bases, data migration, automated processes
+            </div>
+
+            <div class="step-list">
+                <div class="step-item">
+                    <strong>Create a JSON file:</strong> Save user data as users.json
+                </div>
+                <div class="step-item">
+                    <strong>Use Admin Panel:</strong> Go to admin.html → Bulk Import tab
+                </div>
+                <div class="step-item">
+                    <strong>Paste JSON data:</strong> Copy from your file and paste
+                </div>
+                <div class="step-item">
+                    <strong>Import users:</strong> Click the Import Users button
+                </div>
+            </div>
+
+            <h3>Sample users.json file:</h3>
+            <div class="code-block">
+{
+  "users": [
+    {
+      "email": "admin@website.com",
+      "password": "admin123",
+      "name": "Administrator",
+      "role": "admin"
+    },
+    {
+      "email": "user1@website.com",
+      "password": "user123",
+      "name": "Regular User 1"
+    },
+    {
+      "email": "user2@website.com",
+      "password": "user456",
+      "name": "Regular User 2"
+    }
+  ]
+}
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="guide-section">
+            <h2>🔧 Troubleshooting</h2>
+
+            <div class="method-card">
+                <h3>Common Issues:</h3>
+                <ul>
+                    <li><strong>Login not working:</strong> Check if user exists in localStorage</li>
+                    <li><strong>Users not saving:</strong> Ensure localStorage is not disabled</li>
+                    <li><strong>JSON errors:</strong> Validate your JSON syntax</li>
+                    <li><strong>Duplicate emails:</strong> Each user must have a unique email</li>
+                </ul>
+            </div>
+
+            <div class="method-card">
+                <h3>Debug Commands:</h3>
+                <div class="code-block">
+// Check if users exist
+console.log('Total users:', JSON.parse(localStorage.getItem('users') || '[]').length);
+
+// View current user
+console.log('Logged in user:', localStorage.getItem('loggedInUser'));
+
+// Clear all data (CAUTION!)
+localStorage.clear();
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Notes -->
+        <div class="guide-section">
+            <h2>🔒 Security Considerations</h2>
+
+            <div class="warning-box">
+                <strong>Important:</strong> This is a client-side only system for demonstration purposes.
+            </div>
+
+            <div class="method-card">
+                <h3>Production Recommendations:</h3>
+                <ul>
+                    <li>Use server-side authentication (Node.js, PHP, etc.)</li>
+                    <li>Hash passwords with bcrypt or similar</li>
+                    <li>Implement proper session management</li>
+                    <li>Use HTTPS for secure data transmission</li>
+                    <li>Regular security audits and updates</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

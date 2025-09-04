@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="0902.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    <nav>
+        <div class="nav-container">
+            <h2>My Website</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <h1 data-text="Login">Login</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <form id="login-form" class="form">
+                <h3>Login with License</h3>
+                <input type="email" id="login-email" placeholder="Email Address" required>
+                <input type="text" id="login-password" placeholder="License Key (e.g., ABCD-1234-EFGH-5678)" required>
+                <button type="submit" class="btn">Authenticate</button>
+                <p id="login-message"></p>
+                <small style="color: rgba(0,255,0,0.7); font-size: 0.9rem;">
+                    Enter your license key to access premium features
+                </small>
+            </form>
+        </div>
+        <div class="signup-container">
+            <div class="card">
+                <div class="gaming-icon">
+                    <div class="cube">
+                        <div class="face front"></div>
+                        <div class="face back"></div>
+                        <div class="face left"></div>
+                        <div class="face right"></div>
+                        <div class="face top"></div>
+                        <div class="face bottom"></div>
+                    </div>
+                </div>
+                <h3>Sign Up</h3>
+                <p>Registration is handled by our admin team. Join our Discord to get started!</p>
+                <a href="https://discord.gg/e28PNGmjmQ" class="btn discord-btn" target="_blank">Join Discord</a>
+            </div>
+        </div>
+    </main>
+    <script src="keyauth-config.js"></script>
+    <script src="keyauth-user.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

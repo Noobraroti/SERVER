@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block admin areas from search engines
+Disallow: /admin.html
+
+# Sitemap
+Sitemap: https://your-netlify-site.netlify.app/sitemap.xml
